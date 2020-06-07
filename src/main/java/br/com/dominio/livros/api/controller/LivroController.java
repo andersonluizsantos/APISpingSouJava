@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dominio.livros.api.dto.LivroDTO;
@@ -50,6 +51,11 @@ public class LivroController {
 	@DeleteMapping(path="/{id}", produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Void> excluirLivros(@PathVariable int id) {
 		return livroService.excluirLivros(id);
+	}
+	
+	@GetMapping(path="/{q}")
+	public ResponseEntity<Livro> pesquisarLivroPorId(@RequestParam(value = "id", defaultValue = "0") Integer id) {
+		return livroService.buscarLivros(id);
 	}
 	
 }
