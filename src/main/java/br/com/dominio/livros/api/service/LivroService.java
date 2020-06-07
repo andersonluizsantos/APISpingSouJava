@@ -69,4 +69,12 @@ public class LivroService {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
+
+	public ResponseEntity<Void> excluirLivros(Integer id) {
+		if (id.equals(1)) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
 }
