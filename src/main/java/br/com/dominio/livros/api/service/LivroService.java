@@ -53,4 +53,20 @@ public class LivroService {
 		}
 		
 	}
+
+	public ResponseEntity<LinkedHashMap<String, Object>> atualizarLivros(Integer id, LivroDTO livroDTO) {
+		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		
+		if (id.equals(1)) {
+			map.put("id", id);
+			map.put("nome", livroDTO.getNome());
+			map.put("publicacao", livroDTO.getPublicacao());
+			map.put("dataAtualizacao", LocalDateTime.now());
+			return ResponseEntity.status(HttpStatus.OK).body(map);
+		} else {
+			map.put("nome", livroDTO.getNome());
+			map.put("publicacao", livroDTO.getPublicacao());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
 }
