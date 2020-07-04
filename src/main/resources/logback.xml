@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<timeZone>GMT-03:00</timeZone>
+			<includeContext>true</includeContext>
+			<fieldNames>
+				<timestamp>timestamp</timestamp>
+				<version>version</version>
+				<logger>logger</logger>
+				<thread>thread</thread>
+				<stackTrace>stackTrace</stackTrace>
+
+				<version>[ignore]</version>
+				<levelValue>[ignore]</levelValue>
+
+			</fieldNames>
+			<customFields>{"appname":"br.com.dominio.livros.api"}</customFields>
+		</encoder>
+	</appender>
+
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
