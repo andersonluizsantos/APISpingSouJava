@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import static net.logstash.logback.argument.StructuredArguments.value;
+import org.jboss.logging.MDC;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +17,32 @@ import org.springframework.stereotype.Service;
 
 import br.com.dominio.livros.api.dto.LivroDTO;
 import br.com.dominio.livros.api.model.Livro;
+import br.com.dominio.livros.api.util.StringUtil;
 
 @Service
 public class LivroService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LivroService.class);
 
 	public ResponseEntity<List<Livro>> listarLivros() {
-		List<Livro> livros = new ArrayList<>();
-		Livro l1 = new Livro(1, "Spring Total", LocalDate.of(2020, 5, 15));
-		Livro l2 = new Livro(2, "Java total", LocalDate.of(2019, 2, 15));
-		Livro l3 = new Livro(3, "Angular total", LocalDate.of(2019, 2, 15));
-		livros.add(l1);
-		livros.add(l2);
-		livros.add(l3);
+		MDC.put("Nome ", "Anderson Luiz dos Santos");
+		LOGGER.info("Iniciando a listagem de livros");
+		List<Livro> livros = null;
+		try {			
+			livros = new ArrayList<>();
+			Livro l1 = new Livro(1, "Spring Total", LocalDate.of(2020, 5, 15));
+			Livro l2 = new Livro(2, "Java total", LocalDate.of(2019, 2, 15));
+			Livro l3 = new Livro(3, "Angular total", LocalDate.of(2019, 2, 15));
+			LOGGER.info("Verificando os campos do livro3. ", value("Entrada: ", StringUtil.browseFields(l3)));
+			livros.add(l1);
+			livros.add(l2);
+			livros.add(l3);
+		} catch (Exception e) {
+			LOGGER.error("Erro ao tentar se comunicar com o mainframe", value("error_message: ", e.getMessage()),
+					value("stacktrace", e));
+		}
+		LOGGER.info("Listagem Concluída com Sucesso");
+		
 		return ResponseEntity.ok(livros);
 	}
 
